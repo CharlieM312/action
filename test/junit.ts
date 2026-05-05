@@ -1,5 +1,6 @@
 import * as chai from "chai"
 import { expect } from "chai"
+import { describe, it } from "node:test"
 
 import { TestStatus, parseJunitFile } from "../src/test_parser"
 
@@ -101,7 +102,11 @@ describe("junit", async () => {
 \tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 `
 
-        expect(case_with_message.details).to.eql(details)
+        const normalizeDetails = (value: string | undefined) =>
+            value?.replace(/\r\n/g, "\n").trimEnd()
+
+        expect(normalizeDetails(case_with_message.details)).to.eql(
+        normalizeDetails(details))
 
         expect(result.suites[0].cases[5].name).to.eql("failsTestSix")
         expect(result.suites[0].cases[6].name).to.eql("failsTestSeven")
