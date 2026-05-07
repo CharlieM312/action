@@ -1,7 +1,7 @@
 import * as fs from "fs"
 import * as util from "util"
 import * as core from "@actions/core"
-import * as glob from "glob-promise"
+import * as glob from "glob"
 
 import { TestResult, TestStatus, parseFile } from "./test_parser"
 import { dashboardResults, dashboardSummary } from "./dashboard"
@@ -22,13 +22,13 @@ async function run(): Promise<void> {
 
         for (const path of pathGlobs.split(/\r?\n/)) {
             if (glob.hasMagic(path)) {
-                paths.push(...await glob.promise(path))
+                paths.push(...await glob.glob(path))
             } else {
                 paths.push(path.trim())
             }
         }
 
-        let show = TestStatus.Fail
+        let show: number = TestStatus.Fail
         if (showList) {
             show = 0
 
