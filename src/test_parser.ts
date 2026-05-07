@@ -42,12 +42,12 @@ export interface TestCase {
 
 export async function parseTap(data: string): Promise<TestResult> {
     const lines = data.trim().split(/\r?\n/)
-    let version = 12
+    // let version = 12
     let header = 0
     let trailer = false
 
     if (lines.length > 0 && lines[header].match(/^TAP version 13$/)) {
-        version = 13
+        // version = 13
         header++
     }
 
@@ -237,7 +237,7 @@ async function parseJunitXml(xml: any): Promise<TestResult> {
         for (const testcase of testsuite.testcase) {
             let status = TestStatus.Pass
 
-            const id = testcase.$.id
+            // const id = testcase.$.id
             const classname = testcase.$.classname
             const name = testcase.$.name
             const duration = testcase.$.time
@@ -326,7 +326,7 @@ export async function parseTrx(xml: any): Promise<TestResult> {
         for (const item of result.UnitTestResult) {
             let status = TestStatus.Pass
     
-            const id = item.$.testId
+            // const id = item.$.testId
             const name = item.$.testName
             const duration = item.$.duration
             const outcome = item.$.outcome
