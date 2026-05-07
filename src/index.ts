@@ -3,8 +3,8 @@ import * as util from "util"
 import * as core from "@actions/core"
 import * as glob from "glob"
 
-import { TestResult, TestStatus, parseFile } from "./test_parser"
-import { dashboardResults, dashboardSummary } from "./dashboard"
+import { TestResult, TestStatus, parseFile, getTestStatusName } from "./test_parser.js"
+import { dashboardResults, dashboardSummary } from "./dashboard.js"
 
 async function run(): Promise<void> {
     try {
@@ -71,7 +71,7 @@ async function run(): Promise<void> {
                 const showType = Number(showName)
 
                 if (!isNaN(showType) && (show & showType) == showType) {
-                    showInfo += ` ${TestStatus[showType]}`
+                    showInfo += ` ${getTestStatusName(showType)}`
                 }
             }
             core.debug(showInfo)

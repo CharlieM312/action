@@ -1,5 +1,5 @@
-import escapeHTML from "./escape_html"
-import { TestResult, TestStatus } from "./test_parser"
+import escapeHTML from "./escape_html.js"
+import { TestResult, TestStatus } from "./test_parser.js"
 
 const dashboardUrl = "https://svg.test-summary.com/dashboard.svg"
 const passIconUrl = "https://svg.test-summary.com/icon/pass.svg?s=12"
@@ -98,7 +98,7 @@ export function dashboardResults(result: TestResult, show: number, folded: boole
     return table
 }
 
-function statusTitle(status: TestStatus): string {
+function statusTitle(status: number): string {
     switch (status) {
         case TestStatus.Fail:
             return "Test failures"
@@ -111,7 +111,7 @@ function statusTitle(status: TestStatus): string {
     }
 }
 
-function statusIcon(status: TestStatus): string | undefined {
+function statusIcon(status: number): string | undefined {
     switch (status) {
         case TestStatus.Pass:
             return `<img src="${passIconUrl}" alt="" />`

@@ -2,13 +2,14 @@ import * as chai from "chai"
 import chaiAsPromised from 'chai-as-promised'
 import { expect } from "chai"
 
-import { TestStatus, parseFile } from "../src/test_parser"
+import { parseFile } from "../src/test_parser.js"
+import { resourcePath } from "./common.js"
 
 chai.use(chaiAsPromised)
 
-const tapResourcePath = `${__dirname}/resources/tap`
-const junitResourcePath = `${__dirname}/resources/junit`
-const trxResourcePath = `${__dirname}/resources/trx`
+const tapResourcePath = `${resourcePath}/resources/tap`
+const junitResourcePath = `${resourcePath}/resources/junit`
+const trxResourcePath = `${resourcePath}/resources/trx`
 
 describe("file", async () => {
     it("identifies common tap", async () => {

@@ -3,11 +3,24 @@ import * as util from "util"
 
 import xml2js from "xml2js"
 
-export enum TestStatus {
-    None = 0,
-    Pass = (1 << 0),
-    Fail = (1 << 1),
-    Skip = (1 << 2)
+export const TestStatus = {
+    None: 0,
+    Pass: (1 << 0),
+    Fail: (1 << 1),
+    Skip: (1 << 2)
+} as const
+
+export function getTestStatusName(value: number): String {
+    switch (value) {
+        case TestStatus.Fail:
+            return "Fail"
+        case TestStatus.Skip:
+            return "Skip"
+        case TestStatus.Pass:
+            return "Pass"
+        default:
+            return "Unknown"
+    }
 }
 
 export interface TestCounts {
@@ -32,7 +45,7 @@ export interface TestSuite {
 }
 
 export interface TestCase {
-    status: TestStatus
+    status: number
     name?: string
     description?: string
     message?: string

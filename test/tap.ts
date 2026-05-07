@@ -2,15 +2,16 @@ import * as chai from "chai"
 import chaiAsPromised from 'chai-as-promised'
 import { expect } from "chai"
 
-import { TestStatus, parseTapFile } from "../src/test_parser"
+import { TestStatus, parseTapFile } from "../src/test_parser.js"
+import { resourcePath } from "./common.js"
 
 chai.use(chaiAsPromised)
 
-const resourcePath = `${__dirname}/resources/tap`
+const tapResourcePath = `${resourcePath}/resources/tap`
 
 describe("tap", async () => {
     it("parses common", async () => {
-        const result = await parseTapFile(`${resourcePath}/01-common.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/01-common.tap`)
 
         expect(result.counts.passed).to.eql(6)
         expect(result.counts.failed).to.eql(0)
@@ -22,7 +23,7 @@ describe("tap", async () => {
     })
 
     it("parses unknown amount and failure", async () => {
-        const result = await parseTapFile(`${resourcePath}/02-unknown-amount-and-failure.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/02-unknown-amount-and-failure.tap`)
 
         expect(result.counts.passed).to.eql(5)
         expect(result.counts.failed).to.eql(2)
@@ -61,7 +62,7 @@ describe("tap", async () => {
     })
 
     it("can bail out", async () => {
-        const result = await parseTapFile(`${resourcePath}/03-bail-out.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/03-bail-out.tap`)
 
         expect(result.counts.passed).to.eql(0)
         expect(result.counts.failed).to.eql(1)
@@ -71,7 +72,7 @@ describe("tap", async () => {
     })
 
     it("understands skipped tests", async () => {
-        const result = await parseTapFile(`${resourcePath}/04-skipped.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/04-skipped.tap`)
 
         expect(result.counts.passed).to.eql(1)
         expect(result.counts.failed).to.eql(0)
@@ -103,7 +104,7 @@ describe("tap", async () => {
     })
 
     it("can skip an entire file", async () => {
-        const result = await parseTapFile(`${resourcePath}/05-skip-everything.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/05-skip-everything.tap`)
 
         expect(result.counts.passed).to.eql(0)
         expect(result.counts.failed).to.eql(0)
@@ -114,7 +115,7 @@ describe("tap", async () => {
     })
 
     it("reads todos as skipped", async () => {
-        const result = await parseTapFile(`${resourcePath}/06-todo.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/06-todo.tap`)
 
         expect(result.counts.passed).to.eql(2)
         expect(result.counts.failed).to.eql(0)
@@ -139,7 +140,7 @@ describe("tap", async () => {
     })
 
     it("handles creative liberties", async () => {
-        const result = await parseTapFile(`${resourcePath}/07-creative-liberties.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/07-creative-liberties.tap`)
 
         expect(result.counts.passed).to.eql(9)
         expect(result.counts.failed).to.eql(0)
@@ -183,7 +184,7 @@ describe("tap", async () => {
     })
 
     it("handles everything", async () => {
-        const result = await parseTapFile(`${resourcePath}/08-everything.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/08-everything.tap`)
 
         expect(result.counts.passed).to.eql(6)
         expect(result.counts.failed).to.eql(6)
@@ -257,7 +258,7 @@ describe("tap", async () => {
     })
 
     it("parses node-tap output", async () => {
-        const result = await parseTapFile(`${resourcePath}/09-node-tap.tap`)
+        const result = await parseTapFile(`${tapResourcePath}/09-node-tap.tap`)
 
         expect(result.counts.passed).to.eql(4)
         expect(result.counts.failed).to.eql(4)
@@ -265,6 +266,6 @@ describe("tap", async () => {
     })
 
     it("rejects invalid trailer", async () => {
-        expect(parseTapFile(`${resourcePath}/10-results-after-trailer.tap`)).to.be.rejectedWith(Error)
+        expect(parseTapFile(`${tapResourcePath}/10-results-after-trailer.tap`)).to.be.rejectedWith(Error)
     })
 })

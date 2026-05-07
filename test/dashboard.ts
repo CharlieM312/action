@@ -1,7 +1,7 @@
 import { expect } from "chai"
 
-import { TestStatus, TestResult } from "../src/test_parser"
-import { dashboardResults } from "../src/dashboard"
+import { TestStatus, TestResult } from "../src/test_parser.js"
+import { dashboardResults } from "../src/dashboard.js"
 
 describe("dashboard", async () => {
     it("escapes HTML entities", async () => {

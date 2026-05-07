@@ -1,4 +1,3 @@
-import * as chai from "chai"
 import { expect } from "chai"
 
 import * as fs from "fs"
@@ -6,9 +5,10 @@ import * as util from "util"
 
 import xml2js from "xml2js"
 
-import { TestStatus, parseTrx } from "../src/test_parser"
+import { TestStatus, parseTrx } from "../src/test_parser.js"
+import { resourcePath } from "./common.js"
 
-const resourcePath = `${__dirname}/resources/trx`
+const trxResourcePath = `${resourcePath}/resources/trx`
 
 async function parseTrxFile(filename: string) {
     const readfile = util.promisify(fs.readFile)
@@ -19,7 +19,7 @@ async function parseTrxFile(filename: string) {
 
 describe("trx", async () => {
     it("parses common", async () => {
-        const result = await parseTrxFile(`${resourcePath}/example.trx`)
+        const result = await parseTrxFile(`${trxResourcePath}/example.trx`)
 
         expect(result.counts.passed).to.eql(3)
         expect(result.counts.failed).to.eql(1)
@@ -30,7 +30,7 @@ describe("trx", async () => {
     })
 
     it("parses example", async () => {
-        const result = await parseTrxFile(`${resourcePath}/example.trx`)
+        const result = await parseTrxFile(`${trxResourcePath}/example.trx`)
 
         expect(result.counts.passed).to.eql(3)
         expect(result.counts.failed).to.eql(1)
