@@ -1,9 +1,11 @@
-import * as chai from "chai"
 import { expect } from "chai"
 
-import { TestStatus, parseJunitFile } from "../src/test_parser"
+import { TestStatus, parseJunitFile } from "../src/test_parser.js"
+import {dirname, join} from "path"
+import { fileURLToPath } from "node:url"
 
-const resourcePath = `${__dirname}/resources/junit`
+const currentDir = dirname(fileURLToPath(import.meta.url))
+const resourcePath = join(currentDir, "resources/junit")
 
 describe("junit", async () => {
     it("parses common", async () => {

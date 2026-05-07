@@ -40,6 +40,18 @@ export interface TestCase {
     duration?: string
 }
 
+function normalizeNewlines(value: unknown): string | undefined {
+    if (value === null || value === undefined) return undefined
+    if (typeof value === "string") return value.replace(/\r\n/g, "\n")
+    if (typeof value === "object") {
+        const v = value as any
+        if ("_" in v && typeof v._ === "string") {
+            return v._.replace(/\r\n/g, "\n")
+        }
+    }
+    return String(value).replace(/\r\n/g, "\n")
+}
+
 export async function parseTap(data: string): Promise<TestResult> {
     const lines = data.trim().split(/\r?\n/)
     // let version = 12
@@ -257,9 +269,9 @@ async function parseJunitXml(xml: any): Promise<TestResult> {
 
                 message = element.$ ? element.$.message : undefined
                 if (typeof element === "string") {
-                    details = element
+                    details = normalizeNewlines(element)
                 } else {
-                    details = element._
+                    details = normalizeNewlines(element._)
                 }
 
                 counts.failed++
@@ -335,7 +347,7 @@ export async function parseTrx(xml: any): Promise<TestResult> {
             let details: string = ""
 
             const output = item?.Output?.[0]
-            details = "StdOut:" + output?.StdOut?.[0]
+            details = `StdOut:${normalizeNewlines(output?.StdOut?.[0]) ?? ""}`
 
             if (outcome == "Passed") {
                 counts.passed++
@@ -343,8 +355,9 @@ export async function parseTrx(xml: any): Promise<TestResult> {
                 status = TestStatus.Fail
                 counts.failed++
 
-                message = output?.ErrorInfo?.[0]?.Message
-                details = "StackTrace:" + output?.ErrorInfo?.[0]?.StackTrace + '\n' + details
+                message = normalizeNewlines(output?.ErrorInfo?.[0]?.Message) ?? undefined
+                details = normalizeNewlines(`StackTrace:${output?.ErrorInfo?.[0]?.StackTrace ?? ""}\n${details}`) ?? details
+
             } else {
                 status = TestStatus.Pass
                 counts.skipped++

@@ -1,5 +1,5 @@
-import escapeHTML from "./escape_html"
-import { TestResult, TestStatus } from "./test_parser"
+import escapeHTML from "./escape_html.js"
+import { TestResult, TestStatus } from "./test_parser.js"
 
 const dashboardUrl = "https://svg.test-summary.com/dashboard.svg"
 const passIconUrl = "https://svg.test-summary.com/icon/pass.svg?s=12"

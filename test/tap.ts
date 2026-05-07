@@ -1,12 +1,14 @@
 import * as chai from "chai"
 import chaiAsPromised from 'chai-as-promised'
 import { expect } from "chai"
-
-import { TestStatus, parseTapFile } from "../src/test_parser"
+import { TestStatus, parseTapFile } from "../src/test_parser.js"
+import { dirname, join } from "path"
+import { fileURLToPath } from "url"
 
 chai.use(chaiAsPromised)
 
-const resourcePath = `${__dirname}/resources/tap`
+const currentDir = dirname(fileURLToPath(import.meta.url))
+const resourcePath = join(currentDir, "resources/tap")
 
 describe("tap", async () => {
     it("parses common", async () => {

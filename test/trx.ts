@@ -1,14 +1,16 @@
-import * as chai from "chai"
 import { expect } from "chai"
 
 import * as fs from "fs"
 import * as util from "util"
 
 import xml2js from "xml2js"
+import {dirname, join} from "path"
+import { fileURLToPath } from "url"
 
-import { TestStatus, parseTrx } from "../src/test_parser"
+import { TestStatus, parseTrx } from "../src/test_parser.js"
 
-const resourcePath = `${__dirname}/resources/trx`
+const currentDir = dirname(fileURLToPath(import.meta.url))
+const resourcePath = join(currentDir, "resources/trx")
 
 async function parseTrxFile(filename: string) {
     const readfile = util.promisify(fs.readFile)

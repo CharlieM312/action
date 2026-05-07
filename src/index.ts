@@ -3,8 +3,9 @@ import * as util from "util"
 import * as core from "@actions/core"
 import * as glob from "glob"
 
-import { TestResult, TestStatus, parseFile } from "./test_parser"
-import { dashboardResults, dashboardSummary } from "./dashboard"
+import { TestStatus, parseFile } from "./test_parser.js"
+import type { TestResult } from "./test_parser.js"
+import { dashboardResults, dashboardSummary } from "./dashboard.js"
 
 async function run(): Promise<void> {
     try {

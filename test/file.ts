@@ -1,14 +1,16 @@
 import * as chai from "chai"
 import chaiAsPromised from 'chai-as-promised'
 import { expect } from "chai"
-
-import { TestStatus, parseFile } from "../src/test_parser"
+import {dirname, join} from "path"
+import { parseFile } from "../src/test_parser.js"
+import { fileURLToPath } from "node:url"
 
 chai.use(chaiAsPromised)
 
-const tapResourcePath = `${__dirname}/resources/tap`
-const junitResourcePath = `${__dirname}/resources/junit`
-const trxResourcePath = `${__dirname}/resources/trx`
+const currentDir = dirname(fileURLToPath(import.meta.url))
+const tapResourcePath = join(currentDir, "resources/tap")
+const junitResourcePath = join(currentDir, "resources/junit")
+const trxResourcePath = join(currentDir, "resources/trx")
 
 describe("file", async () => {
     it("identifies common tap", async () => {

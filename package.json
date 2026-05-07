@@ -2,6 +2,7 @@
   "name": "test-summary",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "description": "Display test results in a GitHub Actions workflow",
   "main": "dist/index.js",
   "exports": {
@@ -12,9 +13,9 @@
     "format": "prettier --write **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "npx rimraf ./dist && npx rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
-    "test": "mocha -r ts-node/register --reporter mocha-multi-reporters --reporter-options configFile=test/config.json test/**/*.ts",
+    "test": "node --loader ts-node/esm ./node_modules/mocha/bin/mocha --reporter mocha-multi-reporters --reporter-options configFile=test/config.json test/**/*.ts",
     "clean": "rm -rf dist",
-    "all": "npm run build && npm run lint && npm run pack && npm test"
+    "all": "npm run build && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
